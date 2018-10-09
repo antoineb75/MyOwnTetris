@@ -6,7 +6,7 @@ values = list(reversed(range(0, 1010, 10)))
 for num, i in enumerate(keys):
         POINTS_SPEED[i] = values[num]
 
-COLOR = ['', 'grey', '#641E16', '#512E5F', '#D4AC0D', '#FF5733', '#117A65', '#196F3D', '#3498DB', '#85C1E9']
+COLOR = ['', 'purple', '#641E16', '#512E5F', '#D4AC0D', '#FF5733', '#117A65', '#196F3D', '#3498DB', '#85C1E9']
 
 TETRIMINOS = {'barre': {'xInit':5,\
                         'L':4,\
