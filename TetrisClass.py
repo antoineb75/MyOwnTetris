@@ -90,7 +90,17 @@ class Tetrimino:
         self.displayObj =  TETRIMINOS[self.type]['pos{}'.format(self.pos)]
         self.L = TETRIMINOS[self.type]['L']
         self.H = TETRIMINOS[self.type]['H']
-              
+    
+    def swap(self, alter):
+        self.type = alter.type 
+        self.Xinit = alter.Xinit
+        self.Yinit = alter.Yinit
+        self.X, self.Y = alter.X, alter.Y
+        self.pos = alter.pos
+        self.displayObj =  alter.displayObj
+        self.L = alter.L
+        self.H = alter.hide
+
     def display(self, X, Y, gamefield, event, score):
         autorized, cellTetri = self.move(X, Y, gamefield, event, score)
         if autorized:

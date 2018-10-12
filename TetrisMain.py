@@ -12,6 +12,7 @@ def anime(manuel=False):
     try:
         global X, Y
         global piece
+        global next_piece
         global terrain
         global score
         Y+=1
@@ -21,7 +22,8 @@ def anime(manuel=False):
             score.points = 200
             leftPanel = Label(cadre, text='SCORE:\n{}'.format(score.points), anchor='n')
             leftPanel.grid(column=0, row=0)
-            piece.__init__()
+            piece.swap(next_piece)
+            next_piece.__init__()
             X = piece.Xinit
             Y = piece.Yinit
         assert goOn != -1 
@@ -74,6 +76,7 @@ terrain.init_display(displayGame)
 
 # init : affichage premier Tetrimino
 piece = Tetrimino()
+next_piece = Tetrimino()
 X, Y = piece.X, piece.Y
 
 piece.display(piece.X, piece.Y,terrain, 'D', None)
