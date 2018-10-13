@@ -20,10 +20,10 @@ class Brick:
 
 class Gamefield:
     """Gestion du terrain de jeu"""
-    def __init__(self):
-        self._field = TERRAIN['rep'] # liste de virtualisation du terrain de jeu
-        self.L = TERRAIN['L']   # Largeur du terrain
-        self.H = TERRAIN['H']   # Hauteur du terrain
+    def __init__(self, input_field):
+        self._field = input_field['rep'] # liste de virtualisation du terrain de jeu
+        self.L = input_field['L']   # Largeur du terrain
+        self.H = input_field['H']   # Hauteur du terrain
 
     # initialisation du terrain dans l'interface graphique    
     def init_display(self, widget):
@@ -90,7 +90,17 @@ class Tetrimino:
         self.displayObj =  TETRIMINOS[self.type]['pos{}'.format(self.pos)]
         self.L = TETRIMINOS[self.type]['L']
         self.H = TETRIMINOS[self.type]['H']
-              
+    
+    def swap(self, alter):
+        self.type = alter.type 
+        self.Xinit = alter.Xinit
+        self.Yinit = alter.Yinit
+        self.X, self.Y = alter.X, alter.Y
+        self.pos = alter.pos
+        self.displayObj =  alter.displayObj
+        self.L = alter.L
+        self.H = alter.H
+
     def display(self, X, Y, gamefield, event, score):
         autorized, cellTetri = self.move(X, Y, gamefield, event, score)
         if autorized:
@@ -110,6 +120,22 @@ class Tetrimino:
             return -1
         else:
             return 0
+
+    def display_next(self, gamefield):
+        for j in range(1, gamefield.H-1):
+            for i in range(1, gamefield.L-1):
+                color = getColor(int(gamefield.field[j][i]))
+                gamefield.case[(i,j)].turnOn(color)
+
+        for j in range(0, self.H):
+            for i in range(0, self.L):
+                print(i, j)
+                if self.displayObj[j][i] != "0":
+                    color = getColor(int(self.displayObj[j][i]))
+                    gamefield.case[(i+1, j+1)].turnOn(color)
+                else:
+                    color = getColor(int(gamefield.field[j+1][i+1]))
+                    gamefield.case[(i+1,j+1)].turnOn(color)
 
     def hide(self, gamefield, event):
         for j in range(self.Y, min(self.Y+self.H, gamefield.H-1)):

@@ -1,6 +1,6 @@
 import time
 from TetrisClass import Tetrimino, Gamefield, Score
-from TetrisVar import TERRAIN
+from TetrisVar import TERRAIN, NEXT_GRID
 from TetrisFunc import getColor, speed
 from tkinter import *
 import datetime
@@ -12,6 +12,7 @@ def anime(manuel=False):
     try:
         global X, Y
         global piece
+        global next_piece
         global terrain
         global score
         Y+=1
@@ -21,7 +22,9 @@ def anime(manuel=False):
             score.points = 200
             leftPanel = Label(cadre, text='SCORE:\n{}'.format(score.points), anchor='n')
             leftPanel.grid(column=0, row=0)
-            piece.__init__()
+            piece.swap(next_piece)
+            next_piece.__init__()
+            next_piece.display_next(nextPiece_cell)
             X = piece.Xinit
             Y = piece.Yinit
         assert goOn != -1 
@@ -63,17 +66,28 @@ cadre.pack()
 # init du score
 score = Score()
 
+# positionnement et affichage du score
 leftPanel = Label(cadre, text='SCORE:\n{}'.format(score.points), anchor='n')
 leftPanel.grid(column=0, row=0)
 
+# positionnement et affichage du terrain de jeu
 displayGame = Canvas(cadre, width=275, height=470)
 displayGame.grid(column=1, row=1)
-terrain = Gamefield()
-
+terrain = Gamefield(TERRAIN)
 terrain.init_display(displayGame)
+
+# positionnement et affichage du Tetri suivant
+displayNext = Canvas(cadre, width=100, height=80)
+displayNext.grid(column=0, row=1)
+nextPiece_cell = Gamefield(NEXT_GRID)
+
+next_piece = Tetrimino()
+nextPiece_cell.init_display(displayNext)
+next_piece.display_next(nextPiece_cell)
 
 # init : affichage premier Tetrimino
 piece = Tetrimino()
+
 X, Y = piece.X, piece.Y
 
 piece.display(piece.X, piece.Y,terrain, 'D', None)
