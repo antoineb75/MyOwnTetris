@@ -129,7 +129,6 @@ class Tetrimino:
 
         for j in range(0, self.H):
             for i in range(0, self.L):
-                print(i, j)
                 if self.displayObj[j][i] != "0":
                     color = getColor(int(self.displayObj[j][i]))
                     gamefield.case[(i+1, j+1)].turnOn(color)
