@@ -16,9 +16,6 @@ class Brick:
         self.fig=widget.create_rectangle(self.X,self.Y,self.X+self.L,self.Y+self.H,fill=color, width=1, dash=(3, 5))
 
     def turnOn(self, color):
-        if color == "pink":
-            print("toto")
-            print(self.X, self.Y)
         self.widget.itemconfig(self.fig, fill=color)
 
 class Gamefield:
@@ -63,17 +60,15 @@ class Gamefield:
                     delete = 0
             if delete == 1:
                 for i in range(2, 12):
-                    print(i, num)
-                    self.case[(i, num)].turnOn("pink")
-                #time.sleep(2)
+                    self.case[(i, num)].turnOn("orange")
+                    
+                #self.widget.after(1000, self._field.insert(1, '11000000000011'))
                 
                 del self._field[num]
                 self._field.insert(1, '11000000000011')
                 
                 compt_delete +=1
 
-        score.points = (0, 50, 100, 150, 250)[compt_delete]
-        
         # update affichage graphique du terrain
         for lineNb in range(1, self.H):
             for colNb in range(1, self.L-1):
@@ -83,7 +78,9 @@ class Gamefield:
                     color = getColor(int(self.field[lineNb][colNb]))
                 self.case[(colNb,lineNb)].turnOn(color)
 
-        return self._field
+        score.points = (0, 50, 100, 150, 250)[compt_delete]
+          
+        return self._field        
 
     field = property(_getField, _setField)
 
