@@ -59,23 +59,29 @@ class Gamefield:
                 if column == '0':
                     delete = 0
             if delete == 1:
+                """
+                for i in range(2, 12):
+                    self.case[(i, num)].turnOn("orange")
+                    
+                self.widget.after(1000, self._field.insert(1, '11000000000011'))
+                """
                 del self._field[num]
                 self._field.insert(1, '11000000000011')
+                
                 compt_delete +=1
-
-        score.points = (0, 50, 100, 150, 250)[compt_delete]
 
         # update affichage graphique du terrain
         for lineNb in range(1, self.H):
             for colNb in range(1, self.L-1):
                 if colNb != "0":
                     color = getColor(int(self.field[lineNb][colNb]))
-                    self.case[(colNb,lineNb)].turnOn(color)
                 else:
                     color = getColor(int(self.field[lineNb][colNb]))
-                    self.case[(colNb,lineNb)].turnOn(color)
+                self.case[(colNb,lineNb)].turnOn(color)
 
-        return self._field
+        score.points = (0, 50, 100, 150, 250)[compt_delete]
+          
+        return self._field        
 
     field = property(_getField, _setField)
 
@@ -111,10 +117,9 @@ class Tetrimino:
                     for i in range(max(self.X,1), self.X+self.L):
                         if cellTetri[(i, j)] != "0":
                             color = getColor(int(cellTetri[(i, j)]))
-                            gamefield.case[(i, j)].turnOn(color)
                         else:
                             color = getColor(int(gamefield.field[j][i]))
-                            gamefield.case[(i,j)].turnOn(color)
+                        gamefield.case[(i,j)].turnOn(color)
             return 1
         elif cellTetri == []:
             return -1
@@ -129,13 +134,11 @@ class Tetrimino:
 
         for j in range(0, self.H):
             for i in range(0, self.L):
-                print(i, j)
                 if self.displayObj[j][i] != "0":
                     color = getColor(int(self.displayObj[j][i]))
-                    gamefield.case[(i+1, j+1)].turnOn(color)
                 else:
                     color = getColor(int(gamefield.field[j+1][i+1]))
-                    gamefield.case[(i+1,j+1)].turnOn(color)
+                gamefield.case[(i+1,j+1)].turnOn(color)
 
     def hide(self, gamefield, event):
         for j in range(self.Y, min(self.Y+self.H, gamefield.H-1)):
@@ -190,10 +193,9 @@ class Tetrimino:
                     for i in range(self.X, self.X+self.L):
                         if self.displayObj[j-self.Y][i-self.X] != "0":
                             color = getColor(int(self.displayObj[j-self.Y][i-self.X]))
-                            gamefield.case[(i, j)].turnOn(color)
                         else:
                             color = getColor(int(gamefield.field[j][i]))
-                            gamefield.case[(i,j)].turnOn(color)
+                        gamefield.case[(i,j)].turnOn(color)
 
     def detect_collision(self, X, Y, L, H, display_gamefield, display_tetri):
         gamefield_cells = [int(display_gamefield[j][i]) for j in range(Y, Y+H) for i in range(X, X+L)]
