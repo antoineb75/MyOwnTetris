@@ -59,11 +59,12 @@ class Gamefield:
                 if column == '0':
                     delete = 0
             if delete == 1:
+                """
                 for i in range(2, 12):
                     self.case[(i, num)].turnOn("orange")
                     
-                #self.widget.after(1000, self._field.insert(1, '11000000000011'))
-                
+                self.widget.after(1000, self._field.insert(1, '11000000000011'))
+                """
                 del self._field[num]
                 self._field.insert(1, '11000000000011')
                 
