@@ -113,10 +113,12 @@ class Tetrimino:
         for num, i in enumerate(gamefield.field):
             if num >=1 and num <=20:
                 print(i[2:12])
+        """
         with open('/Users/Antoine/Downloads/X-trace.txt', "a") as featureX:
             print('Tetrimino: {}, X: {}, Y: {}\nGamefield:'.format(self.type, self.X, self.Y))
-            featureX.write('{} - Tetrimino: {}; X: {}; Y: {}; Gamefield: {}\n'\
-                            .format(str(datetime.datetime.now()), self.type, self.X, self.Y, gamefield.field))
+            featureX.write('{} - Tetrimino: {}; Pos: {}; X: {}; Y: {}; Gamefield: {}\n'\
+                            .format(str(datetime.datetime.now()), self.type, self.pos, self.X, self.Y, gamefield.field[1:21]))
+        """
         if autorized:
             self.hide(gamefield, event)
             self.X, self.Y = X, Y

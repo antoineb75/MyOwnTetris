@@ -1,7 +1,7 @@
 import time
 from TetrisClass import Tetrimino, Gamefield, Score
 from TetrisVar import TERRAIN, NEXT_GRID
-from TetrisFunc import getColor, speed
+from TetrisFunc import getColor, speed, crop
 from tkinter import *
 import datetime
 import sys
@@ -40,8 +40,10 @@ def instr_move(event=None):
     global piece
     global terrain
     try:
-        with open('/Users/Antoine/Downloads/Y-trace.txt', "a") as featureY:
-            featureY.write('{} - action: {}\n'.format(str(datetime.datetime.now()), event.char))
+        with open('/Users/Antoine/Downloads/gamesetsTetri.txt', "a") as gamesets:
+            gamesets.write('{}; T: {}; P: {}; X: {}; Y: {}; T: {}; M: {}\n'\
+                            .format(str(datetime.datetime.now()), piece.type, piece.pos, piece.X, piece.Y,\
+                            crop(terrain.field[1:21]), event.char.replace(' ','s')))
         if event.char == "w":
             tempX=X+1
             autorized = piece.display(tempX, Y, terrain, 'R', None)
