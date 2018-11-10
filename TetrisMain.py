@@ -40,6 +40,8 @@ def instr_move(event=None):
     global piece
     global terrain
     try:
+        with open('/Users/Antoine/Downloads/Y-trace.txt', "a") as featureY:
+            featureY.write('{} - action: {}\n'.format(str(datetime.datetime.now()), event.char))
         if event.char == "w":
             tempX=X+1
             autorized = piece.display(tempX, Y, terrain, 'R', None)

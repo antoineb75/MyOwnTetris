@@ -1,6 +1,7 @@
 import datetime
 import time
 import random
+import os
 from tkinter import Label, Tk
 from TetrisFunc import getColor, lost_procedure
 from TetrisVar import DIM_BRIQUES, TERRAIN, TETRIMINOS
@@ -109,10 +110,13 @@ class Tetrimino:
 
     def display(self, X, Y, gamefield, event, score):
         autorized, cellTetri = self.move(X, Y, gamefield, event, score)
-        print('Tetrimino: {}, X: {}, Y: {}\nGamefield:'.format(self.type, self.X, self.Y))
         for num, i in enumerate(gamefield.field):
             if num >=1 and num <=20:
                 print(i[2:12])
+        with open('/Users/Antoine/Downloads/X-trace.txt', "a") as featureX:
+            print('Tetrimino: {}, X: {}, Y: {}\nGamefield:'.format(self.type, self.X, self.Y))
+            featureX.write('{} - Tetrimino: {}; X: {}; Y: {}; Gamefield: {}\n'\
+                            .format(str(datetime.datetime.now()), self.type, self.X, self.Y, gamefield.field))
         if autorized:
             self.hide(gamefield, event)
             self.X, self.Y = X, Y
