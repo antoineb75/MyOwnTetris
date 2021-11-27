@@ -6,7 +6,7 @@ from tkinter import *
 import datetime
 import sys
 
-# animation des pieces
+# animation des pieces modif dev
 def anime(manuel=False):
     global goOn
     try:
